@@ -1,71 +1,85 @@
-:root {
-  --primary-color: #a7f3d0;
-  --secondary-color: #065f46;
-}
+import "./styles.css";
+import React, { useState } from "react";
 
-.App {
-  font-family: sans-serif;
-  text-align: center;
-  margin: 0px;
-}
+export default function App() {
+  var dataBase = {
+    "🦋": "Butterfly",
+    "🐬": "Dolphin",
+    "🐿️": "Chipmunk",
+    "🐪": "Camel",
+    "🐆": "Leopard",
+    "🐒": "Monkey",
+    "🦉": "owl",
+    "🦁": "Lion",
+    "🐇": "Rabbit",
+    "🐹": "Hamster",
+    "🦏": "Rhinoceros"
+  };
 
-#body-App {
-  margin: 0px;
-}
+  var [meaning, setMeaning] = useState("");
 
-input {
-  display: block;
-  width: 500px;
-  height: 3rem;
-  margin: auto;
-}
+  var array = Object.keys(dataBase);
 
-button {
-  display: block;
-  margin: auto;
-}
-
-.displayOutput {
-  margin: 1rem;
-}
-
-.blog-dummy {
-  padding: 1rem;
-  margin: 0px;
-  max-width: 100%;
-  color: var(--primary-color);
-  background-color: var(--secondary-color);
-}
-
-.section {
-  padding: 10rem 0px;
-  max-width: 100%;
-  margin: auto;
-  background-color: var(--primary-color);
-}
-
-.list {
-  display: inline;
-  margin: 0px;
-}
-
-.links {
-  text-decoration: none;
-  padding-right: 1rem;
-  margin: auto;
-  color: var(--primary-color);
-}
-
-.list-start {
-  padding-inline-start: 0px;
-}
-
-@media screen and (max-width: 700px) {
-  input {
-    max-width: 90%;
-    height: 3rem;
+  function onClickHandler(emoji) {
+    meaning = dataBase[emoji];
+    setMeaning(meaning);
   }
-  .App {
-    margin: 0px;
+
+  function onChangeHandler(event) {
+    var change = event.target.value;
+    meaning = dataBase[change];
+    if (meaning === undefined) {
+      meaning = "We do not have this in our database";
+    }
+    setMeaning(meaning);
   }
+
+  return (
+    <div className="App">
+      <h1 className="blog-dummy">ANIMAL EMOJI INTERPRETER</h1>
+      <div className="section">
+        <input onChange={onChangeHandler} placeholder="Enter here"></input>
+        <div style={{ padding: "1rem" }}>INPUT/CLICKED EMOJI: {meaning}</div>
+        <h3>Emojis we know</h3>
+        {array.map((emoji) => {
+          return (
+            <span
+              onClick={() => onClickHandler(emoji)}
+              style={{
+                fontSize: "2rem",
+                cursor: "pointer",
+                padding: "1rem 0.5rem"
+              }}
+              key={emoji}
+            >
+              {emoji}
+            </span>
+          );
+        })}
+      </div>
+      <footer className="blog-dummy">
+        <h2 className="footer-header">CONNECT WITH ME HERE</h2>
+        <ul className="list-start">
+          <li className="list">
+            <a className="links" href="https://github.com/vidhi-thakur/">
+              github
+            </a>
+          </li>
+          <li className="list">
+            <a
+              className="links"
+              href="https://www.linkedin.com/in/vidhi-thakur-9353271a8"
+            >
+              linkedin
+            </a>
+          </li>
+          <li className="list">
+            <a className="links" href="mailto:thakurvidhi997@gmail.com">
+              mail
+            </a>
+          </li>
+        </ul>
+      </footer>
+    </div>
+  );
 }
